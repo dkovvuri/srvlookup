@@ -15,14 +15,15 @@ def lookup_srv(domain):
     srv_records=dns.resolver.query(domain, 'SRV')
     srvinfo={}
     records=[]
-    record={}
     for srv in srv_records:
+        record={}
         record['weight']   = srv.weight
         record['priority'] = srv.priority
         record['host']     = str(srv.target).rstrip('.')
         record['port']     = srv.port
         record['resolvedAddresses'] = lookup_a(str(srv.target).rstrip('.'))
         records.append(record)
+    print(records)
     srvinfo['records'] =  records
     return srvinfo
 
@@ -37,7 +38,6 @@ def main():
     if args.domain is None:
         cprint("Please specify the FQDN to fetch the SRV Records using the flag -d or --domain", "red")
     else:
-        cprint("Looking up domain {}".format(args.domain),"green")
         try:
             srvinfo = lookup_srv(args.domain)
             print(json.dumps(srvinfo,indent=4,skipkeys=True))
