@@ -15,16 +15,18 @@ def lookup_srv(domain):
         srv_records=dns.resolver.query(domain, 'SRV')
         srvinfo={}
         for srv in srv_records:
+            srvinfo['weight']   = srv.weight
+            srvinfo['priority'] = srv.priority
             srvinfo['host']     = str(srv.target).rstrip('.')
             srvinfo['port']     = srv.port
-            srvinfo['resolved_addresses'] = lookup_a(str(srv.target).rstrip('.'),srv.port)
+            srvinfo['resolved_addresses'] = lookup_a(str(srv.target).rstrip('.'))
         return srvinfo
 
-def lookup_a(domain,port):
+def lookup_a(domain):
     result = dns.resolver.query(domain, 'A')
     resolved_addresses = []
     for ipval in result:
-        resolved_addresses.append("{}:{}".format(ipval.to_text()))
+        resolved_addresses.append("{}".format(ipval.to_text()))
     return resolved_addresses
 
 def main():
