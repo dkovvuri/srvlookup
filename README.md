@@ -2,10 +2,18 @@
 
 Helper Utility to Lookup SRV Records
 
-Usage:
+## Installation:
+
+- Install required dependencies:
 
 ```
-python3 ./lookup.py --help
+pip install -r requirements.txt
+```
+
+## Usage:
+
+```
+python3 ./lookup.py -d test.local
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -15,7 +23,7 @@ Required Arguments:
                         FQDN to fetch the SRV records for
 ```
 
-Response Structure:
+## Response Structure:
 
 ```json
 {
