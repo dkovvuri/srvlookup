@@ -12,15 +12,19 @@ requiredNamed.add_argument("-d", "--domain", default=None, help="FQDN to fetch t
 args = parser.parse_args()
 
 def lookup_srv(domain):
-        srv_records=dns.resolver.query(domain, 'SRV')
-        srvinfo={}
-        for srv in srv_records:
-            srvinfo['weight']   = srv.weight
-            srvinfo['priority'] = srv.priority
-            srvinfo['host']     = str(srv.target).rstrip('.')
-            srvinfo['port']     = srv.port
-            srvinfo['resolved_addresses'] = lookup_a(str(srv.target).rstrip('.'))
-        return srvinfo
+    srv_records=dns.resolver.query(domain, 'SRV')
+    srvinfo={}
+    records=[]
+    record={}
+    for srv in srv_records:
+        record['weight']   = srv.weight
+        record['priority'] = srv.priority
+        record['host']     = str(srv.target).rstrip('.')
+        record['port']     = srv.port
+        record['resolvedAddresses'] = lookup_a(str(srv.target).rstrip('.'))
+        records.append(record)
+    srvinfo['records'] =  records
+    return srvinfo
 
 def lookup_a(domain):
     result = dns.resolver.query(domain, 'A')
