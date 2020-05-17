@@ -1,6 +1,6 @@
 # SRV Lookup Utility
 
-Helper Utility to Lookup SRV Records
+Helper Utility to Lookup SRV Records.
 
 ## Installation:
 
